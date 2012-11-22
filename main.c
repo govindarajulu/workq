@@ -9,14 +9,16 @@ void my_tasklet(unsigned long data)
 		printk(KERN_INFO "running tasklet\n");
 	//	udelay(10000);
 	//}
+		return;
 
 }
-unsigned long int data;
+unsigned long int data=100;
+DECLARE_TASKLET(mytask, my_tasklet, data);
 static __init int modinit(void)
 {
-	DECLARE_TASKLET(mytask, my_tasklet, &data);
+
 	printk(KERN_INFO"Hello World!\n");
-	tasklet_init(&mytask,my_tasklet, &data);
+	//tasklet_init(&mytask,my_tasklet, &data);
 	//tasklet_enable(&mytask);
 	tasklet_schedule(&mytask);
 	return 0;
@@ -24,7 +26,7 @@ static __init int modinit(void)
 
 static __exit void modexit(void)
 {
-
+	tasklet_kill(&mytask);
 }
 
 module_init(modinit);
