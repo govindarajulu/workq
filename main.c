@@ -5,10 +5,10 @@
 
 void my_tasklet(unsigned long data)
 {
-	while(1) {
+	//while(1) {
 		printk(KERN_INFO "running tasklet\n");
-		udelay(10000);
-	}
+	//	udelay(10000);
+	//}
 
 }
 unsigned long int data;
