@@ -1,31 +1,33 @@
-#include <linux/module.h>
 #include <linux/kernel.h>
+#include <linux/module.h>
 #include <linux/interrupt.h>
-#include <linux/delay.h>
 
-void my_tasklet(unsigned long data)
-{
-	//while(1) {
-		printk(KERN_INFO "running tasklet\n");
-	//	udelay(10000);
-	//}
+MODULE_LICENSE("GPL");
 
-}
-unsigned long int data;
-static __init int modinit(void)
+char my_tasklet_data[]="my_tasklet_function was called";
+
+/* Bottom Half Function */
+void my_tasklet_function( unsigned long data )
 {
-	DECLARE_TASKLET(mytask, my_tasklet, &data);
-	printk(KERN_INFO"Hello World!\n");
-	tasklet_init(&mytask,my_tasklet, &data);
-	//tasklet_enable(&mytask);
-	tasklet_schedule(&mytask);
-	return 0;
+  printk( "%s\n", (char *)data );
+  return;
 }
 
-static __exit void modexit(void)
-{
+DECLARE_TASKLET( my_tasklet, my_tasklet_function,
+		 (unsigned long) &my_tasklet_data );
 
+int init_module( void )
+{
+  /* Schedule the Bottom Half */
+  tasklet_schedule( &my_tasklet );
+
+  return 0;
 }
 
-module_init(modinit);
-module_exit(modexit);
+void cleanup_module( void )
+{
+  /* Stop the tasklet before we exit */
+  tasklet_kill( &my_tasklet );
+
+  return;
+}
