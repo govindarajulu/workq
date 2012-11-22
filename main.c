@@ -16,6 +16,7 @@ static __init int modinit(void)
 {
 	DECLARE_TASKLET(mytask, my_tasklet, 10);
 	printk(KERN_INFO"Hello World!\n");
+	tasklet_schedule(&mytask);
 	return 0;
 }
 
