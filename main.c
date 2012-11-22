@@ -13,7 +13,7 @@ void my_tasklet(unsigned long data)
 
 }
 unsigned long int data=100;
-DECLARE_TASKLET(mytask, my_tasklet, data);
+DECLARE_TASKLET(mytask, my_tasklet, &data);
 static __init int modinit(void)
 {
 
