@@ -11,13 +11,13 @@ void my_tasklet(unsigned long data)
 	}
 
 }
-
+unsigned long int data;
 static __init int modinit(void)
 {
-	DECLARE_TASKLET(mytask, my_tasklet, 10);
+	DECLARE_TASKLET(mytask, my_tasklet, &data);
 	printk(KERN_INFO"Hello World!\n");
-	tasklet_init(&mytask,my_tasklet, 10);
-	tasklet_enable(&mytask);
+	tasklet_init(&mytask,my_tasklet, &data);
+	//tasklet_enable(&mytask);
 	tasklet_schedule(&mytask);
 	return 0;
 }
