@@ -4,6 +4,8 @@
 #include <linux/delay.h>
 #include <linux/workqueue.h>
 
+MODULE_LICENSE("GPL");
+
 void my_tasklet(unsigned long data)
 {
 	int i=100;
