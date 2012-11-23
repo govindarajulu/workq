@@ -5,10 +5,12 @@
 
 void my_tasklet(unsigned long data)
 {
-	//while(1) {
+	int i=100;
+	while(i > 0) {
 		printk(KERN_INFO "running tasklet\n");
-	//	udelay(10000);
-	//}
+		udelay(100000);
+		i--;
+	}
 		return;
 
 }
@@ -26,6 +28,7 @@ static __init int modinit(void)
 
 static __exit void modexit(void)
 {
+
 	tasklet_kill(&mytask);
 }
 
