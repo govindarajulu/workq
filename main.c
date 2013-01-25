@@ -3,7 +3,7 @@
 #include <linux/interrupt.h>
 #include <linux/delay.h>
 #include <linux/workqueue.h>
-
+#include <linux/slab.h>
 MODULE_LICENSE("GPL");
 
 void my_tasklet(unsigned long data)
